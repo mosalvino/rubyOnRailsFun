@@ -1,0 +1,21 @@
+<h1>Play Tic Tac Toe</h1>
+<table>
+	<% @game.board_array.each_with_index do |row, i| %>
+		<tr>
+			<% row.each_with_index do |cell, j| %>
+				<td style="width:40px;height:40px;text-align:center;border:1px solid #000;">
+					<% pos = i*3 + j %>
+					<% if cell == '-' && @game.status == 'ongoing' %>
+						<%= link_to @game.current_player, games_play_path(position: pos) %>
+					<% else %>
+						<%= cell %>
+					<% end %>
+				</td>
+			<% end %>
+		</tr>
+	<% end %>
+</table>
+<p>Current Player: <%= @game.current_player %></p>
+<p>Status: <%= @game.status %></p>
+<%= link_to 'Back to Start', games_start_path %> |
+<%= link_to 'Reset', games_reset_path %>
