@@ -1,16 +1,20 @@
-<h1>Tic Tac Toe</h1>
-<table>
-	<% @game.board_array.each_with_index do |row, i| %>
-		<tr>
-			<% row.each_with_index do |cell, j| %>
-				<td style="width:40px;height:40px;text-align:center;border:1px solid #000;">
-					<%= cell %>
-				</td>
-			<% end %>
-		</tr>
-	<% end %>
-</table>
-<p>Current Player: <%= @game.current_player %></p>
-<p>Status: <%= @game.status %></p>
-<%= link_to 'Play', games_play_path %> |
-<%= link_to 'Reset', games_reset_path %>
+<div class="container center-align" style="margin-top: 40px;">
+  <h1 class="teal-text">Tic Tac Toe</h1>
+  <table class="striped centered" style="margin: 0 auto;">
+    <% @game.board_array.each_with_index do |row, i| %>
+      <tr>
+        <% row.each_with_index do |cell, j| %>
+          <td style="width:40px;height:40px;text-align:center;border:1px solid #000;">
+            <%= cell %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <p class="flow-text">Current Player: <span class="badge teal white-text"> <%= @game.current_player %> </span></p>
+  <p class="flow-text">Status: <span class="badge grey lighten-1 white-text"> <%= @game.status %> </span></p>
+  <div style="margin-top: 20px;">
+    <%= link_to 'Play', games_play_path, class: 'btn-large teal lighten-1' %>
+    <%= link_to 'Reset', games_reset_path, class: 'btn-large red lighten-1' %>
+  </div>
+</div>
