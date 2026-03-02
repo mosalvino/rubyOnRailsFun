@@ -14,7 +14,23 @@
   <p class="flow-text">Current Player: <span class="badge teal white-text"> <%= @game.current_player %> </span></p>
   <p class="flow-text">Status: <span class="badge grey lighten-1 white-text"> <%= @game.status %> </span></p>
   <div style="margin-top: 20px;">
-    <%= link_to 'Play', games_play_path, class: 'btn-large teal lighten-1' %>
+    <div style="margin-bottom: 10px;">
+      <label for="player_select">Choose your symbol:</label>
+      <select id="player_select" name="player_select" onchange="updateFriendLink()">
+        <option value="X">X</option>
+        <option value="O">O</option>
+      </select>
+    </div>
+    <%= link_to 'Play vs Friend', games_play_path(mode: 'friend', player: 'X'), id: 'play-friend-btn', class: 'btn-large teal lighten-1' %>
+    <%= link_to 'Play vs CPU', games_play_path(mode: 'single'), class: 'btn-large blue lighten-1' %>
+    <script>
+      function updateFriendLink() {
+        var select = document.getElementById('player_select');
+        var btn = document.getElementById('play-friend-btn');
+        var player = select.value;
+        btn.href = '/games/play?mode=friend&player=' + player;
+      }
+    </script>
     <%= link_to 'Reset', games_reset_path, class: 'btn-large red lighten-1' %>
   </div>
 </div>
