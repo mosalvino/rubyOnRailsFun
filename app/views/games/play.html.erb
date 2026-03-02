@@ -1,9 +1,47 @@
 <div class="container center-align" style="margin-top: 40px;">
+  <% if @game.status.ends_with?('wins') %>
+    <script>
+      // Simple confetti effect using canvas
+      function launchConfetti() {
+        var duration = 2 * 1000;
+        var end = Date.now() + duration;
+        (function frame() {
+          var colors = ['#bb0000', '#ffffff', '#00bb00', '#0000bb', '#ffbb00'];
+          for (var i = 0; i < 20; i++) {
+            var confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.top = Math.random() * window.innerHeight + 'px';
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.zIndex = 9999;
+            confetti.style.borderRadius = '50%';
+            confetti.style.opacity = 0.8;
+            confetti.style.pointerEvents = 'none';
+            document.body.appendChild(confetti);
+            setTimeout(function() {
+              confetti.remove();
+            }, duration);
+          }
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        launchConfetti();
+        setTimeout(function() {
+          alert('<%= @game.status %>');
+        }, 300);
+      });
+    </script>
+  <% end %>
   <h1 class="teal-text">Play Tic Tac Toe</h1>
   <table class="striped centered" style="margin: 0 auto;">
     <% mode = params[:mode] || 'friend' %>
     <% player = params[:player] || 'X' %>
-    <% @game.board_array.each_with_index do |row, i| %>
+    <% @game.board_matrix.each_with_index do |row, i| %>
       <tr>
         <% row.each_with_index do |cell, j| %>
           <td style="width:40px;height:40px;text-align:center;border:1px solid #000; padding:0;">
